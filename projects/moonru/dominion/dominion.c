@@ -1260,7 +1260,8 @@ int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer
 				z++;
 			}
 		}
-		while (z - 1 >= 0) {
+		//while (z - 1 >= 0) {
+		while (z >= 0) {  //BUG INTRODUCED	
 			state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; // discard all cards in play that have been drawn
 			z = z - 1;
 		}
@@ -1270,7 +1271,8 @@ int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer
 
 int playSmithy(int currentPlayer, struct gameState *state, int handPos){
 		//+3 Cards
-		for (int i = 0; i < 3; i++)
+		//for (int i = 0; i < 3; i++)
+		for (int i = 0; i <= 3; i++) //BUG INTRODUCED
 		{
 			drawCard(currentPlayer, state);
 		}
@@ -1293,7 +1295,8 @@ int playCouncilRoom(int currentPlayer, struct gameState *state, int handPos){
 		//Each other player draws a card
 		for (int i = 0; i < state->numPlayers; i++)
 		{
-			if (i != currentPlayer)
+			//if (i != currentPlayer)
+			if (i = currentPlayer) //BUG INTRODUCED
 			{
 				drawCard(i, state);
 			}
@@ -1334,7 +1337,7 @@ int playMine(struct gameState *state, int choice1, int choice2, int currentPlaye
 			if (state->hand[currentPlayer][i] == j)
 			{
 				discardCard(i, currentPlayer, state, 0);
-				break;
+				//break; //BUG INTRODUCED	
 			}
 		}
 
@@ -1363,7 +1366,8 @@ int playMinion(struct gameState *state, int handPos, int currentPlayer, int choi
 			}
 
 			//draw 4
-			for (int i = 0; i < 4; i++)
+			//for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 4; i--) //BUG INTRODUCED
 			{
 				drawCard(currentPlayer, state);
 			}
