@@ -1366,8 +1366,7 @@ int playMinion(struct gameState *state, int handPos, int currentPlayer, int choi
 			}
 
 			//draw 4
-			//for (int i = 0; i < 4; i++)
-			for (int i = 0; i < 4; i--) //BUG INTRODUCED
+			for (int i = 0; i < 4; i++)
 			{
 				drawCard(currentPlayer, state);
 			}
