@@ -1,0 +1,5 @@
+#ignore dSYM folder files
+playdom.dSYM/Contents/Info.plist
+playdom.dSYM/Contents/Resources/DWARF/playdom
+player.dSYM/Contents/Info.plist
+player.dSYM/Contents/Resources/DWARF/player
