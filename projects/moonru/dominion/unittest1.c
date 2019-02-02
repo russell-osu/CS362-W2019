@@ -50,7 +50,7 @@ int main()
         adventurers[i] = adventurer;
     }
 
-    printf("**************************** UT 1: updateCoins() ****************************\n");
+    printf("**************************** UT 1: updateCoins() ****************************\n\n");
 
     //test cards with bounds of business rules (game rule maximums and minimums)
     for (p = 0; p < numPlayer; p++)
@@ -119,6 +119,8 @@ int main()
     }
 
 
+    /*****************************   TEST 5: RANDOM VALUES  ******************************/
+
     //test cards with RNG; within and without expected game boundaries
     //treasure cards in hand are randomized
     //hand size is set to max
@@ -176,6 +178,8 @@ int main()
         else
             printf("PASSED\n");
 
+
+        /************************  TEST 6: COMPARE STATES  *************************/
         //ensure tested function hasn't altered game state in unexpected way
         printf("    Compare states test -> ");
             if (compareStates(&G, &ConG, player, numPlayer, 1, 1, 1, 1, 0, 1))

@@ -38,7 +38,7 @@ player: player.c interface.o
 #unittest1: unittest1.c dominion.o rngs.o
 	#gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
 
-tests.out: unittest1.c dominion.o rngs.o test_functions.o
+tests.out: unittest1.c unittest2.c dominion.o rngs.o test_functions.o
 	
 	echo "Result for running BST tests:" > tests.out
 	echo "unittest1.c:" >> tests.out
@@ -46,7 +46,13 @@ tests.out: unittest1.c dominion.o rngs.o test_functions.o
 	./unittest1 >> tests.out
 	gcov dominion.c >> tests.out
 
+	echo "Result for running BST tests:" >> tests.out
+	echo "unittest2.c:" >> tests.out
+	gcc -o unittest2 -g unittest2.c dominion.o rngs.o test_functions.o $(CFLAGS)
+	./unittest2 >> tests.out
+	gcov dominion.c >> tests.out	
+
 all: playdom player tests.out
 
 clean:
-	rm -f *.o playdom.exe playdom player unittest1 tests.out player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player unittest1 unittest2 tests.out player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
