@@ -6,6 +6,9 @@ rngs.o: rngs.h rngs.c
 dominion.o: dominion.h dominion.c rngs.o
 	gcc -c dominion.c -g  $(CFLAGS)
 
+test_functions.o: test_functions.c test_functions.h
+	gcc -c test_functions.c -g $(CFLAGS)
+
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
 #To run playdom you need to entere: ./playdom <any integer number> like ./playdom 10*/
@@ -35,11 +38,11 @@ player: player.c interface.o
 #unittest1: unittest1.c dominion.o rngs.o
 	#gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
 
-tests.out: unittest1.c dominion.c rngs.c
+tests.out: unittest1.c dominion.o rngs.o test_functions.o
 	
 	echo "Result for running BST tests:" > tests.out
 	echo "unittest1.c:" >> tests.out
-	gcc -o unittest1 unittest1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o unittest1 -g unittest1.c dominion.o rngs.o test_functions.o $(CFLAGS)
 	./unittest1 >> tests.out
 	gcov dominion.c >> tests.out
 

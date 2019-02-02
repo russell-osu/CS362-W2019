@@ -10,6 +10,7 @@
 #include "dominion.h"
 #include "dominion_helpers.h"
 #include "rngs.h"
+#include "test_functions.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,21 +21,20 @@
 #define NOISY_TEST 1
 
 //function prototypes
-void assertTrue(int a, int b, int *testsFailed);
-int getRand(int low, int high);
-void setSeed();
+
 
 int main()
 {
     setSeed(); //set seed for local RNG (not rngs.h)
     int i;
-    int seed = 1000; //ensures less determination in RNG
+    int seed = 1000; 
     int numPlayer = 2;
     int maxBonus = 10;
     int p, r, handCount;
     int bonus;
     int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
-    struct gameState G;
+    struct gameState G; //Game state used for testing
+    struct gameState ConG; //Control (unchanged) game state used for comparison
     int maxHandCount = 5;
     int testsFailed = 0; //counts number of tests failed
     // arrays of all coppers, silvers, and golds
@@ -50,7 +50,7 @@ int main()
         adventurers[i] = adventurer;
     }
 
-    printf("**************************** TESTING updateCoins() ****************************\n");
+    printf("**************************** UT 1: updateCoins() ****************************\n");
 
     //test cards with bounds of business rules (game rule maximums and minimums)
     for (p = 0; p < numPlayer; p++)
@@ -65,7 +65,9 @@ int main()
                 printf("Test player %d with %d treasure card(s) and %d bonus.\n", p, handCount, bonus);
 #endif         
                 memset(&G, 23, sizeof(struct gameState));   // clear the game state
-                r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
+                memset(&ConG, 23, sizeof(struct gameState));   // clear the game state
+                r = initializeGame(numPlayer, k, seed, &G); // initialize a new test game
+                memcpy(&ConG, &G, sizeof(struct gameState)); // copy game state to control game state
                 G.handCount[p] = handCount;                 // set the number of cards in hand
 
 
@@ -73,19 +75,23 @@ int main()
                 memcpy(G.hand[p], coppers, sizeof(int) * handCount); // set all the cards to copper
                 updateCoins(p, &G, bonus);
 #if (NOISY_TEST == 1)
-                printf("COPPER: G.coins = %d, expected = %d: ", G.coins, handCount * 1 + bonus);
+                printf("COPPER: G.coins = %d, expected = %d -> ", G.coins, handCount * 1 + bonus);
 #endif
-                assertTrue(G.coins, handCount + bonus, &testsFailed); // check if the number of coins is correct
-
-
+                if (assertTrue(G.coins, handCount + bonus, &testsFailed)) // check if the number of coins is correct
+                    printf("PASSED\n");
+                else
+                    printf("PASSED\n");
+                
                 /*****************************   TEST 2: SILVER  ******************************/
                 memcpy(G.hand[p], silvers, sizeof(int) * handCount); // set all the cards to silver
                 updateCoins(p, &G, bonus);
 #if (NOISY_TEST == 1)
-                printf("SILVER: G.coins = %d, expected = %d: ", G.coins, handCount * 2 + bonus);
+                printf("SILVER: G.coins = %d, expected = %d -> ", G.coins, handCount * 2 + bonus);
 #endif
-                assertTrue(G.coins, handCount * 2 + bonus, &testsFailed); // check if the number of coins is correct
-
+                if (assertTrue(G.coins, handCount * 2 + bonus, &testsFailed)) // check if the number of coins is correct
+                    printf("PASSED\n");
+                else
+                    printf("PASSED\n");
 
                 /*****************************   TEST 3: GOLD  ******************************/
                 memcpy(G.hand[p], golds, sizeof(int) * handCount); // set all the cards to gold
@@ -93,7 +99,21 @@ int main()
 #if (NOISY_TEST == 1)
                 printf("GOLD: G.coins = %d, expected = %d: ", G.coins, handCount * 3 + bonus);
 #endif
-                assertTrue(G.coins, handCount * 3 + bonus, &testsFailed); // check if the number of coins is correct
+                if (assertTrue(G.coins, handCount * 3 + bonus, &testsFailed)) // check if the number of coins is correct
+                    printf("PASSED\n");
+                else
+                    printf("PASSED\n");
+
+
+                /************************  TEST 4: COMPARE STATES  *************************/
+                //ensure tested function hasn't altered game state in unexpected way
+                if (compareStates(&G, &ConG, p, numPlayer, 1, 1, 1, 1, 0, 1))
+                    printf("Compare states test -> PASSED\n");
+                else
+                {
+                     printf("Compare states test -> FAILED\n");
+                     testsFailed++;
+                }
             }
         }
     }
@@ -102,11 +122,13 @@ int main()
     //test cards with RNG; within and without expected game boundaries
     //treasure cards in hand are randomized
     //hand size is set to max
-    for (int i = 1; i < 10; i++)
+    for (int i = 1; i < 50; i++)
     {
         memset(&G, 23, sizeof(struct gameState));   // clear the game state
+        memset(&ConG, 23, sizeof(struct gameState));   // clear the game state
         r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-        int player = getRand(1,2); //randomly choose player 1 or 2
+        memcpy(&ConG, &G, sizeof(struct gameState)); // copy game state to control game state
+        int player = getRand(1, numPlayer); //randomly choose player
         G.handCount[player] = maxHandCount; // set the number of cards in hand
         memcpy(G.hand[player], adventurers, sizeof(int) * handCount); // set all the cards to adventurer
         int totalTreasure = 0; //accumulator for adding up total value of treasure cards in hand
@@ -146,17 +168,29 @@ int main()
             }
         }
 
+        //ensure coin and bonus amounts add up to what's expected
         printf("Copper: %d, Silver: %d, Gold: %d, Bonus: %d, Expec: %d, G.coins: %d -> ",
             numCopper, numSilver, numGold, bonus, totalTreasure, G.coins);
-        assertTrue (G.coins, totalTreasure, &testsFailed);
+        if (assertTrue (G.coins, totalTreasure, &testsFailed))
+            printf("PASSED\n");
+        else
+            printf("PASSED\n");
 
+        //ensure tested function hasn't altered game state in unexpected way
+        printf("    Compare states test -> ");
+            if (compareStates(&G, &ConG, player, numPlayer, 1, 1, 1, 1, 0, 1))
+            printf("PASSED\n");
+        else
+        {
+            printf("FAILED\n");
+            testsFailed++;
+        }
 
     }
 
 
-
     //Output Results
-    printf("\n\n*************************** RESULTS ***************************\n");
+    printf("\n\n********************** UT 1 RESULTS **********************\n");
     if (testsFailed <= 0)
         printf("ALL TESTS PASSED\n");
     else
@@ -164,35 +198,4 @@ int main()
     
 
     return 0;
-}
-
-//custom assert function that will not stop execution
-void assertTrue(int a, int b, int *testsFailed)
-{
-    if (a == b)
-    {
-        printf("PASSED\n");
-    }
-    else
-    {
-        testsFailed++;
-        printf("FAILED\n");
-    }
-}
-
-
-
-//Returns a random integer in the specified range. 
-//With help from Gaddis, 9E, p. 135.
-int getRand(int low, int high)
-{
-	return (rand() % (high - low + 1)) + low;
-}
-
-//Sets the seed for rand()
-void setSeed()
-{
-	//set the seed for RNG
-	unsigned seed = time(NULL);
-	srand(seed);
 }
