@@ -3,6 +3,7 @@
 
 //custom assert function that will not stop execution (and prints result)
 int assertTrue(int a, int b, int *testsFailed);
+int assertTruePrint (int a, int b, int *testsFailed, char* msg);
 
 //Returns a random integer in the specified range.
 int getRand(int low, int high);

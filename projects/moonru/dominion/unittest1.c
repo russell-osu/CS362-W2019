@@ -28,7 +28,7 @@ int main()
     setSeed(); //set seed for local RNG (not rngs.h)
     int i;
     int seed = 1000; 
-    int numPlayer = 2;
+    int numPlayer = 4;
     int maxBonus = 10;
     int p, r, handCount;
     int bonus;
@@ -120,6 +120,7 @@ int main()
 
 
     /*****************************   TEST 5: RANDOM VALUES  ******************************/
+     printf("\n\n********************** RANDOMIZED COINS AND BONUSES **********************\n\n");
 
     //test cards with RNG; within and without expected game boundaries
     //treasure cards in hand are randomized

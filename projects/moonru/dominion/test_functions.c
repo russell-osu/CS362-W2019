@@ -28,6 +28,22 @@ int assertTrue (int a, int b, int *testsFailed)
     }
 }
 
+//custom assert function that will not stop execution (and prints result)
+int assertTruePrint (int a, int b, int *testsFailed, char* msg)
+{
+    if (a == b)
+    {
+        printf("PASSED: %s\n", msg);
+        return 1;
+    }
+    else
+    {
+        printf("FAILED: %s\n", msg);
+        *testsFailed = *testsFailed + 1; 
+        return 0;
+    }
+}
+
 
 
 //Returns a random integer in the specified range. 

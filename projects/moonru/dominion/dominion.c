@@ -809,7 +809,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		// discardCard(handPos, currentPlayer, state, 0);
 
 		// //discard trashed card
-		// for (i = 0; i < state->handCount[currentPlayer]; i++)
+		// for (i = 0; i < state->handCount[currentPlaye+)r]; i+
 		// {
 		// 	if (state->hand[currentPlayer][i] == j)
 		// 	{
@@ -1245,24 +1245,29 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	return -1;
 }
 
-int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, int cardDrawn, int* temphand, int z) {
+int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, 
+	int cardDrawn, int* temphand, int z) {
 		while (drawntreasure < 2) {
-			if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
+			//if the deck is empty we need to shuffle discard and add to deck
+			if (state->deckCount[currentPlayer] < 1) {
 				shuffle(currentPlayer, state);
 			}
 			drawCard(currentPlayer, state);
-			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+			//top card of hand is most recently drawn card.
+			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];
 			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
 				drawntreasure++;
 			else {
 				temphand[z] = cardDrawn;
-				state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+				//this should just remove the top card (the most recently drawn one).
+				state->handCount[currentPlayer]--; 
 				z++;
 			}
 		}
 		//while (z - 1 >= 0) {
 		while (z >= 0) {  //BUG INTRODUCED	
-			state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; // discard all cards in play that have been drawn
+			// discard all cards in play that have been drawn
+			state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; 
 			z = z - 1;
 		}
 		return 0;
