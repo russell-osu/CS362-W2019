@@ -74,29 +74,29 @@ int main()
         
     }
 
-    printf("********************** TEST 2: RANDOM VALUES ************************\n\n");
-    /***************************   TEST 2: RANDOM VALUES  ****************************/
-    //test random values (including negative values) in range that is well outside of
-    //expected bounds
-    for (int i=0; i < numTests; i++)
-    {
-        memset(&G, 23, sizeof(struct gameState));   // clear the game state
-        r = initializeGame(numPlayer, k, seed, &G); // initialize a new test game
+    // printf("********************** TEST 2: RANDOM VALUES ************************\n\n");
+    // /***************************   TEST 2: RANDOM VALUES  ****************************/
+    // //test random values (including negative values) in range that is well outside of
+    // //expected bounds
+    // for (int i=0; i < numTests; i++)
+    // {
+    //     memset(&G, 23, sizeof(struct gameState));   // clear the game state
+    //     r = initializeGame(numPlayer, k, seed, &G); // initialize a new test game
 
-        //randomize current player and make select values negative
-        int currPlayer = getRand(0, 1000);
-        if ((currPlayer % 7) == 0) { currPlayer *= -1; } //negate value
-        G.whoseTurn = currPlayer; //set game state
+    //     //randomize current player and make select values negative
+    //     int currPlayer = getRand(0, 1000);
+    //     if ((currPlayer % 7) == 0) { currPlayer *= -1; } //negate value
+    //     G.whoseTurn = currPlayer; //set game state
 
-        //test function versus expected value
-        printf("# Current player: %d -> ", currPlayer);
-        if (assertTrue(whoseTurn(&G), currPlayer, &testsFailed))
-                    printf("PASSED\n");
-                else
-                    printf("FAILED\n");
+    //     //test function versus expected value
+    //     printf("# Current player: %d -> ", currPlayer);
+    //     if (assertTrue(whoseTurn(&G), currPlayer, &testsFailed))
+    //                 printf("PASSED\n");
+    //             else
+    //                 printf("FAILED\n");
 
 
-    }
+    // }
 
 
     //Output Results

@@ -80,77 +80,77 @@ int main()
         
     }
 
-        printf("********************** TEST 2: RANDOMIZED OTHER CARDS **********************\n\n");
-        /*****************************   TEST 2: RANDOMIZED OTHER CARDS  ******************************/
-        //testing cards other than Province for game ending condition
-        //pick three random cards (other than Province) and set supply to zero to test
-        //game ending condtion
-    for (int i=0; i < numTests; i++)
-    {
-        memset(&G, 23, sizeof(struct gameState));   // clear the game state
-        memset(&ConG, 23, sizeof(struct gameState));   // clear the game state
-        r = initializeGame(numPlayer, k, seed, &G); // initialize a new test game
-        memcpy(&ConG, &G, sizeof(struct gameState)); // copy game state to control game state
+    //     printf("********************** TEST 2: RANDOMIZED OTHER CARDS **********************\n\n");
+    //     /*****************************   TEST 2: RANDOMIZED OTHER CARDS  ******************************/
+    //     //testing cards other than Province for game ending condition
+    //     //pick three random cards (other than Province) and set supply to zero to test
+    //     //game ending condtion
+    // for (int i=0; i < numTests; i++)
+    // {
+    //     memset(&G, 23, sizeof(struct gameState));   // clear the game state
+    //     memset(&ConG, 23, sizeof(struct gameState));   // clear the game state
+    //     r = initializeGame(numPlayer, k, seed, &G); // initialize a new test game
+    //     memcpy(&ConG, &G, sizeof(struct gameState)); // copy game state to control game state
 
-        //test other cards game ending condition
-        int cardArr[3] = {99}; //holds randomized cards used in test
+    //     //test other cards game ending condition
+    //     int cardArr[3] = {99}; //holds randomized cards used in test
 
-        //populate card array with 3 unique supply cards (none should be Province)
-        int chooseAgain;
-        for (int j=0; j<3; j++)
-        {   
+    //     //populate card array with 3 unique supply cards (none should be Province)
+    //     int chooseAgain;
+    //     for (int j=0; j<3; j++)
+    //     {   
     
-            do
-            {
-                chooseAgain = 0; //flag for loop
-                cardArr[j] = getRand(0,26);
+    //         do
+    //         {
+    //             chooseAgain = 0; //flag for loop
+    //             cardArr[j] = getRand(0,26);
 
-                for (int k=0; k<3; k++) //make sure there are no dups in array
-                {
-                    if (j!=k) 
-                    {   //choose again if it's a duplicate
-                        if (cardArr[j] == cardArr[k]) {chooseAgain = 1;}
-                    }
-                }
-                //if card is Province, choose again
-                if (cardArr[j] == 3) {chooseAgain = 1;}
+    //             for (int k=0; k<3; k++) //make sure there are no dups in array
+    //             {
+    //                 if (j!=k) 
+    //                 {   //choose again if it's a duplicate
+    //                     if (cardArr[j] == cardArr[k]) {chooseAgain = 1;}
+    //                 }
+    //             }
+    //             //if card is Province, choose again
+    //             if (cardArr[j] == 3) {chooseAgain = 1;}
 
-            }while (chooseAgain);
+    //         }while (chooseAgain);
 
-            //set count of supply cards corresponding to values in cardArr to 0
-            G.supplyCount[cardArr[j]] = 0;
+    //         //set count of supply cards corresponding to values in cardArr to 0
+    //         G.supplyCount[cardArr[j]] = 0;
 
-            //set a small number of the rand chosen supply cards to a positive 
-            //non-zero value for variation
-            if (cardArr[j] % 7 == 0) {G.supplyCount[cardArr[j]] = 1;}
+    //         //set a small number of the rand chosen supply cards to a positive 
+    //         //non-zero value for variation
+    //         if (cardArr[j] % 7 == 0) {G.supplyCount[cardArr[j]] = 1;}
 
-        }
+    //     }
 
-        //test function versus expected value
-        printf("# Supply cards: %d: %d, %d: %d, %d: %d -> ", 
-            cardArr[0], G.supplyCount[cardArr[0]], cardArr[1], 
-            G.supplyCount[cardArr[1]], cardArr[2], G.supplyCount[cardArr[2]]);
-        int gameOver = (G.supplyCount[cardArr[0]] == 0) && 
-            (G.supplyCount[cardArr[1]] == 0) && (G.supplyCount[cardArr[2]] == 0);
-        if (assertTrue(isGameOver(&G), gameOver, &testsFailed))
-                    printf("PASSED\n");
-                else
-                    printf("FAILED\n");
+    //     //test function versus expected value
+    //     printf("# Supply cards: %d: %d, %d: %d, %d: %d -> ", 
+    //         cardArr[0], G.supplyCount[cardArr[0]], cardArr[1], 
+    //         G.supplyCount[cardArr[1]], cardArr[2], G.supplyCount[cardArr[2]]);
+    //     int gameOver = (G.supplyCount[cardArr[0]] == 0) && 
+    //         (G.supplyCount[cardArr[1]] == 0) && (G.supplyCount[cardArr[2]] == 0);
+    //     if (assertTrue(isGameOver(&G), gameOver, &testsFailed))
+    //                 printf("PASSED\n");
+    //             else
+    //                 printf("FAILED\n");
 
-        /************************  TEST 2.1: COMPARE STATES  *************************/
-        //ensure tested function hasn't altered game state in unexpected way
-        if (compareStates(&G, &ConG, 0, numPlayer, 0, 0, 0, 1, 1, 1))
-            printf("Compare states test -> PASSED\n");
-        else
-        {
-                printf("Compare states test -> FAILED\n");
-                testsFailed++;
-        }
+    //     /************************  TEST 2.1: COMPARE STATES  *************************/
+    //     //ensure tested function hasn't altered game state in unexpected way
+    //     if (compareStates(&G, &ConG, 0, numPlayer, 0, 0, 0, 1, 1, 1))
+    //         printf("Compare states test -> PASSED\n");
+    //     else
+    //     {
+    //             printf("Compare states test -> FAILED\n");
+    //             testsFailed++;
+    //     }
         
-    }
+    // }
 
-    printf("**************************** TEST 3: ALL COMBOS OF 3 ****************************\n\n");
-    /******************   TEST 3: ALL COMBINATIONS OF 3 CARDS  *******************/
+    printf("**************************** TEST 2: ALL COMBOS OF 3 ****************************\n\n");
+    /******************   TEST 2: ALL COMBINATIONS OF 3 CARDS  *******************/
 
     for (int i=0; i<27; i++)
     {

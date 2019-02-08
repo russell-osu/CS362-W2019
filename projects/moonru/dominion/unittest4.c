@@ -28,7 +28,7 @@ int main()
     setSeed(); //set seed for local RNG (not rngs.h)
     int seed = 1000; 
     int numPlayer = 4;
-    int maxDeck = 500;
+    int maxHandSize = 25;
     int r;
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     struct gameState G; //Game state used for testing
@@ -48,7 +48,7 @@ int main()
     //cards (0 to 26), curse to treasure_map
     for (int i = 0; i < numPlayer; i++)
     {
-        for (int j = 0; j < maxDeck; j++)
+        for (int j = 0; j < maxHandSize; j++)
         {
             for (int k = 0; k < 27; k++)
             {
