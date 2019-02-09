@@ -40,7 +40,7 @@ int main()
 
 
 
-    printf("**********************    VILLAGE TEST    *******************\n\n");
+    printf("**********************   CT 3: VILLAGE   *******************\n\n");
   
 
     printf("********************** TEST 1: +1 CARD ***************\n");
@@ -98,7 +98,7 @@ int main()
     }
 
     //Output Results
-    printf("\n\n********************** CARD TEST 1: RESULTS ********************\n");
+    printf("\n\n********************** CT 3: VILLAGE - RESULTS ********************\n");
     if (testsFailed <= 0)
         printf("ALL TESTS PASSED\n");
     else

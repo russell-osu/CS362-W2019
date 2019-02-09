@@ -34,7 +34,7 @@ int main()
     struct gameState ConG; //Control (unchanged) game state used for comparison
     //int maxHandCount = 5;
     int testsFailed = 0; //counts number of tests failed
-    int numTests = 50;
+    //int numTests = 50;
 
 
     printf("**************************** UT 2: isGameOver() ****************************\n\n");

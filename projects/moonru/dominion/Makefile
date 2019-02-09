@@ -87,7 +87,7 @@ cardtest2.c cardtest3.c cardtest4.c dominion.o rngs.o test_functions.o
 	echo "cardtest4.c:" >> unittestresults.out
 	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o test_functions.o $(CFLAGS)
 	./cardtest4 >> unittestresults.out
-	gcov -b dominion.c >> unittestresults.out
+	gcov -f -b dominion.c >> unittestresults.out
 
 all: playdom player unittestresults.out
 

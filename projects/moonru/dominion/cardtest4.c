@@ -37,7 +37,7 @@ int main()
     int testsFailed = 0; //counts number of tests failed
 
 
-    printf("**********************    GREAT HALL TEST    *******************\n\n");
+    printf("**********************  CT 4: GREAT HALL   *******************\n\n");
   
 
     printf("********************** TEST 1: +1 CARD ***************\n");
@@ -95,7 +95,7 @@ int main()
     }
 
     //Output Results
-    printf("\n\n********************** CARD TEST 1: RESULTS ********************\n");
+    printf("\n\n********************** CT 4: GREAT HALL - RESULTS ********************\n");
     if (testsFailed <= 0)
         printf("ALL TESTS PASSED\n");
     else

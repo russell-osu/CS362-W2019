@@ -44,11 +44,11 @@ int main()
     printf("********************** TEST 1: EXPECTED RANGE ************************\n\n");
     /***************************   TEST 1: EXPECTED RANGE  ****************************/
     //Testing valid operation for up to numPlayer players (numPlayers is <= 4; i.e., the
-    //expected range); testing range of 0 to 500 for hand position; testing all 
+    //expected range); testing range of 0 to 25 for hand position; testing all 
     //cards (0 to 26), curse to treasure_map
     for (int i = 0; i < numPlayer; i++)
     {
-        for (int j = 0; j < maxHandSize; j++)
+        for (int j = 0; j <= maxHandSize; j++)
         {
             for (int k = 0; k < 27; k++)
             {

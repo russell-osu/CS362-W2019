@@ -28,7 +28,7 @@ int main()
     setSeed(); //set seed for local RNG (not rngs.h)
     int seed = 1000; 
     int numPlayer = 4;
-    int maxDeck = 500;
+    //int maxDeck = 500;
     int r;
     int handPos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0,
         currPlayer = 0;
@@ -37,12 +37,12 @@ int main()
     struct gameState G; //Game state used for testing
     struct gameState ConG; //Control (unchanged) game state used for comparison
     int testsFailed = 0; //counts number of tests failed
-    int numTests = 50;
+    //int numTests = 50;
 
 
 
 
-    printf("**********************    SMITHY TEST    ***********************\n\n");
+    printf("**********************    CT 1: SMITHY    ***********************\n\n");
   
 
     printf("********************** TEST 1: +3 cards ************************\n");
@@ -99,7 +99,7 @@ int main()
     }
 
     //Output Results
-    printf("\n\n********************** CARD TEST 1: RESULTS ********************\n");
+    printf("\n\n********************** CT 1: SMITHY - RESULTS ********************\n");
     if (testsFailed <= 0)
         printf("ALL TESTS PASSED\n");
     else

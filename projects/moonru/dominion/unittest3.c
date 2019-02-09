@@ -33,7 +33,7 @@ int main()
     struct gameState G; //Game state used for testing
     struct gameState ConG; //Control (unchanged) game state used for comparison
     int testsFailed = 0; //counts number of tests failed
-    int numTests = 50;
+    //int numTests = 50;
 
 
 
