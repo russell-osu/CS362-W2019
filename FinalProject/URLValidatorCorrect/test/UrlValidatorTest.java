@@ -90,6 +90,7 @@ protected void setUp() {
       if (printIndex)  {
          statusPerLine = 6;
       }
+      //int count = 0;
       do {
           StringBuilder testBuffer = new StringBuilder();
          boolean expected = true;
@@ -102,6 +103,8 @@ protected void setUp() {
          String url = testBuffer.toString();
          boolean result = urlVal.isValid(url);
          if(result == true)
+         //count++;
+         //System.out.println(count);
         	 System.out.println(url);
          assertEquals(url, expected, result);
          if (printStatus) {
