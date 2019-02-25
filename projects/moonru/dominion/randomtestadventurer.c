@@ -37,9 +37,18 @@ int main()
     struct gameState G; //Game state used for testing
     struct gameState ConG; //Control (unchanged) game state used for comparison
     int testsFailed = 0; //counts number of tests failed
-    int numTests = 1000;
-
-
+    int numTests = 500;
+    // int coppers[MAX_DECK];
+    // int silvers[MAX_DECK];
+    // int golds[MAX_DECK];
+    // int smithys[MAX_DECK];
+    // for (int i = 0; i < MAX_DECK; i++)
+    // {
+    //     coppers[i] = copper;
+    //     silvers[i] = silver;
+    //     golds[i] = gold;
+    //     smithys[i] = smithy;
+    // }
 
 
 
@@ -67,9 +76,18 @@ int main()
         //randomly seed deck with different card types (card # 0-26)
         for (int i = 0; i < maxDeck; i++)
         {
-            G.deck[currPlayer][getRand(0, 26)];
+            G.deck[currPlayer][i] = getRand(0, 26);
         }
 
+        // //set every 100th iteration to empty deck for branch coverage
+        // if (k%100 == 0) 
+        // {   
+        //     memset(&G, 23, sizeof(struct gameState));   // clear the test game state
+        //     memset(&ConG, 23, sizeof(struct gameState));   // clear the control game state
+        //     r = initializeGame(numPlayer, kCards, seed, &G); // initialize a new test game
+            
+        //     G.deckCount[currPlayer] = 0; //reduce deck size to 0 for branch coverage
+        // }
 
 
         memcpy(&ConG, &G, sizeof(struct gameState));  //copy game state to control
@@ -142,7 +160,50 @@ int main()
             printf("Compare supply cards states -> FAILED\n");
             testsFailed++;
         }
+
     } //end random test loop
+
+
+     printf("********************** Empty Deck Test ***************\n");
+    /***************************   TEST 5: Empty Deck  ***********************/
+    //Testing +2 cards again in case where deck < 1 (for better branch coverage)
+    memset(&G, 23, sizeof(struct gameState));   // clear the test game state
+    memset(&ConG, 23, sizeof(struct gameState));   // clear the control game state
+    r = initializeGame(numPlayer, kCards, seed, &G); // initialize a new test game
+    
+    memcpy(&ConG, &G, sizeof(struct gameState)); //copy game state to control
+    int currPlayer = 0;
+    G.deckCount[currPlayer] = 0; //reduce deck size to 0 for branch coverage
+    cardEffect(adventurer, choice1, choice2, choice3, &G, handPos, &bonus); //play Adventurer
+
+    //count number of treasurer cards in hand for test and control games
+    //test game (G)
+    int testTreasure = 0;
+    G.whoseTurn = currPlayer;
+    for (int i=0; i<G.handCount[currPlayer]; i++) 
+    {   
+        int currCard = G.hand[currPlayer][i];
+        if(currCard == copper || currCard == silver || currCard == gold)
+            testTreasure++;
+
+    }
+    //control game (ConG)
+    int controlTreasure = 0;
+    ConG.whoseTurn = currPlayer;
+    for (int i=0; i<ConG.handCount[currPlayer]; i++) //test game (G)
+    {   
+        int currCard = ConG.hand[currPlayer][i];
+        if(currCard == copper || currCard == silver || currCard == gold)
+            controlTreasure++;
+            
+    }
+
+    //test function versus expected value
+    printf("Test treasure cards: %d; Control treasure cards: %d -> ", testTreasure, controlTreasure);
+    if (assertTrue(testTreasure, controlTreasure, &testsFailed))
+        printf("PASSED\n");
+    else
+        printf("FAILED\n");
 
 
 

@@ -28,8 +28,7 @@ int main()
     int seed = 1000; 
     int numPlayer = 4;
     int r;
-    int handPos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0,
-        currPlayer = 0;
+    int handPos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, 
         smithy, village, baron, great_hall};
     struct gameState G; //Game state used for testing
@@ -63,7 +62,7 @@ int main()
         //randomly seed deck with different card types (card # 0-26)
         for (int i = 0; i < maxDeck; i++)
         {
-            G.deck[currPlayer][getRand(0, 26)];
+            G.deck[currPlayer][i] = getRand(0, 26);
         }
 
         memcpy(&ConG, &G, sizeof(struct gameState)); //copy game state to control
