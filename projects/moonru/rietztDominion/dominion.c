@@ -664,7 +664,8 @@ void adventurerEffect(int drawntreasure, int currentPlayer, int nextPlayer, stru
       z++;
     }
   }
-  while(z-1==0){     //***BUG: should be 'z-1>=0'***//
+  //while(z-1==0){ //BUG CAUGHT//
+  while(z-1 >= 0){
     state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
     z=z-1;
   }
@@ -675,7 +676,8 @@ void adventurerEffect(int drawntreasure, int currentPlayer, int nextPlayer, stru
 */
 void smithyEffect(int currentPlayer, int handPos, struct gameState *state){
   //+3 Cards
-  for (int i = 0; i <= 3; i++){             //***BUG: should be 'i < 3'***//
+  //for (int i = 0; i <= 3; i++){ //BUG CAUGHT//
+  for (int i = 0; i < 3; i++){
     drawCard(currentPlayer, state);
   }
 }
