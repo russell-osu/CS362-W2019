@@ -1,5 +1,5 @@
 CFLAGS= -Wall -fpic -coverage -lm -std=c99
-
+#small change for testing
 rngs.o: rngs.h rngs.c
 	gcc -c rngs.c -g  $(CFLAGS)
 
